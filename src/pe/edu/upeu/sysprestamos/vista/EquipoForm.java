@@ -6,17 +6,37 @@
 
 package pe.edu.upeu.sysprestamos.vista;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import pe.edu.upeu.sysprestamos.DAO.EquipoDAO;
+import pe.edu.upeu.sysprestamos.DAO.InventarioDAO;
+import pe.edu.upeu.sysprestamos.modelo.Equipo;
+import pe.edu.upeu.sysprestamos.modelo.Inventario;
+
+
 /**
  *
  * @author Fernando
  */
-public class EquipoForm extends javax.swing.JInternalFrame {
-
+public final class EquipoForm extends javax.swing.JInternalFrame {
+    ArrayList<Inventario> lista = new ArrayList();
+    ArrayList<Equipo> lista1 = new ArrayList();
+    InventarioDAO ad = new InventarioDAO();
+    EquipoDAO ad1 = new EquipoDAO();
+    DefaultTableModel model;
+    DefaultComboBoxModel<Object> modelocombo = new DefaultComboBoxModel<>();
+    
     /**
      * Creates new form EquipoForm
      */
     public EquipoForm() {
         initComponents();
+        cargarInven();
+        desabilitar();              
+        ListarEqui();
+        bloquear();
     }
 
     /**
@@ -37,7 +57,7 @@ public class EquipoForm extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cboInventario = new javax.swing.JComboBox();
-        txtDetalleInventario = new javax.swing.JTextField();
+        txtIdInventario = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         txtNombreE = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
@@ -72,6 +92,11 @@ public class EquipoForm extends javax.swing.JInternalFrame {
         jLabel6.setText("Nro Serie");
 
         cboInventario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecionar" }));
+        cboInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboInventarioActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Estado");
 
@@ -94,7 +119,7 @@ public class EquipoForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtIdInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -111,7 +136,7 @@ public class EquipoForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -151,6 +176,11 @@ public class EquipoForm extends javax.swing.JInternalFrame {
                 "Id", "Nombre", "Marca", "Modelo", "Numero Serie", "Estado", "IdDetalleInventario"
             }
         ));
+        jtbListarEquipo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbListarEquipoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbListarEquipo);
         if (jtbListarEquipo.getColumnModel().getColumnCount() > 0) {
             jtbListarEquipo.getColumnModel().getColumn(0).setMaxWidth(30);
@@ -180,12 +210,32 @@ public class EquipoForm extends javax.swing.JInternalFrame {
         });
 
         btnAgregar.setText("Registrar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -249,6 +299,166 @@ public class EquipoForm extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        if(cboInventario.getSelectedIndex()!=0){
+        int iddet = Integer.parseInt(txtIdInventario.getText());
+        String nomeq = txtNombreE.getText();
+        String mar = txtMarca.getText();
+        String mod = txtModelo.getText();
+        int ser = Integer.parseInt(txtSerie.getText());
+        int est = Integer.parseInt(txtEstado.getText());
+        
+        int o = ad1.registrarEquipo(iddet, nomeq, mar, mod, ser, est);
+        limpiar();
+        if(o>0){
+            JOptionPane.showMessageDialog(null, "Equipo Registrado");
+            updateComponets();            
+            btnAgregar.setEnabled(false);
+        }
+        }else{
+        
+            JOptionPane.showMessageDialog(null, "Selecionar Equipo");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        int fil = jtbListarEquipo.getSelectedRow();
+        if(fil<0){
+            JOptionPane.showMessageDialog(null, "Seleccionar El Equipo a MODIFICAR!");
+        }else{
+            int confirmar=JOptionPane.showConfirmDialog(null, "Esta seguro que desea MODIFICAR El Equipo? "); 
+            if(JOptionPane.OK_OPTION==confirmar) {
+                    int id = Integer.parseInt(txtId.getText());
+                    String nomeq = txtNombreE.getText();
+                    String mar = txtMarca.getText();
+                    String mod = txtModelo.getText();
+                    int ser = Integer.parseInt(txtSerie.getText());
+                    int est = Integer.parseInt(txtEstado.getText());
+             
+                    int x = ad1.modificarEquipo(id, nomeq, mar, mod, ser, est);
+                    if(x==1){
+                        JOptionPane.showMessageDialog(null, "Equipo MODIFICADO!");
+                        updateComponets();
+                        limpiar();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Equipo no se ha MODIFICADO!");      
+                    }                   
+            }        
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int fila = jtbListarEquipo.getSelectedRow();
+        if(fila<0){
+            JOptionPane.showMessageDialog(null, "Seleccionar El Equipo a ELIMINAR");            
+        }else{
+            int confirmar=JOptionPane.showConfirmDialog(null, "Esta seguro que desea ELIMINAR El Equipo? "); 
+            if(JOptionPane.OK_OPTION==confirmar) {
+                    int celda = (int) jtbListarEquipo.getValueAt(fila, 0);
+                    int x = ad1.eliminarEquipo(celda);
+                    if(x==1){
+                        JOptionPane.showMessageDialog(null, "Equipo ELIMINADO!");
+                        updateComponets();
+                        limpiar();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Equipo no ELIMINADO!");      
+                    }                   
+            } 
+            
+        }        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void cboInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboInventarioActionPerformed
+        // TODO add your handling code here:
+        String c = cboInventario.getSelectedItem().toString();
+        int id;
+        int x = cboInventario.getSelectedIndex();
+        if(x>0){
+            
+            id = ad.devolverIdInventario(c);
+            txtIdInventario.setText(""+id);
+        }
+    }//GEN-LAST:event_cboInventarioActionPerformed
+
+    private void jtbListarEquipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbListarEquipoMouseClicked
+        // TODO add your handling code here:
+        if(evt.getButton()==1){
+            int fila = jtbListarEquipo.getSelectedRow();
+            int celda = (int) jtbListarEquipo.getValueAt(fila, 0);
+            lista1 = ad1.listarEquipo(celda);
+            for(int i=0;i<lista1.size();i++){
+                txtId.setText(""+lista1.get(i).getIdEquipo());
+                txtNombreE.setText(lista1.get(i).getNombEq());
+                txtMarca.setText(lista1.get(i).getMarca());
+                txtModelo.setText(lista1.get(i).getModelo());
+                txtSerie.setText(""+lista1.get(i).getSerie());
+                txtEstado.setText(""+lista1.get(i).getEstado());
+                txtIdInventario.setText(""+lista1.get(i).getIdInventario());
+                
+                
+            }
+        }  
+    }//GEN-LAST:event_jtbListarEquipoMouseClicked
+    void limpiar(){
+    txtIdInventario.setText(null);
+    txtId.setText(null);
+    txtNombreE.setText(null);
+    txtMarca.setText(null);
+    txtModelo.setText(null);
+    txtSerie.setText(null);
+    txtEstado.setText(null);
+    }
+    void updateComponets(){
+            LimpiarTabla(model);
+            ListarEqui();
+    }
+    void LimpiarTabla(DefaultTableModel modelo){
+        int a =modelo.getRowCount()-1;
+        for(int i=a;i>=0;i--){  
+            modelo.removeRow(i);
+        }
+    }
+     void ListarEqui(){
+    lista1 = ad1.listarEquipo();
+    model = (DefaultTableModel) jtbListarEquipo.getModel();
+        Object[] equ = new Object[7];
+        for(int i=0;i<lista1.size();i++){
+            equ[0]=lista1.get(i).getIdEquipo();
+            equ[1]=lista1.get(i).getNombEq();
+            equ[2]=lista1.get(i).getMarca();
+            equ[3]=lista1.get(i).getModelo();
+            equ[4]=lista1.get(i).getSerie();
+            equ[5]=lista1.get(i).getEstado();
+            equ[6]=lista1.get(i).getIdInventario();
+            model.addRow(equ);
+        }        
+        jtbListarEquipo.setModel(model);
+    }
+    final void cargarInven(){
+    lista = ad.listarInventario();
+    modelocombo.addElement("Seleccionar Inventario");
+    cboInventario.setModel(modelocombo);
+    for (int i=0;i<lista.size();i++){
+    modelocombo.addElement(lista.get(i).getEquipo());
+    }
+    cboInventario.setModel(modelocombo);
+    }
+    void desabilitar(){
+        txtNombreE.setEditable(true);
+        btnAgregar.setEnabled(false);
+    }
+    final void bloquear(){
+    txtNombreE.setEditable(true);
+    btnAgregar.setEnabled(true);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -270,9 +480,9 @@ public class EquipoForm extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable jtbListarEquipo;
-    private javax.swing.JTextField txtDetalleInventario;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdInventario;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNombreE;

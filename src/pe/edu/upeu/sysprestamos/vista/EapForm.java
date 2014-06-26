@@ -20,7 +20,7 @@ import pe.edu.upeu.sysprestamos.DAO.FacultadDAO;
  *
  * @author alum.fial8
  */
-public class EapForm extends javax.swing.JInternalFrame {
+public final class EapForm extends javax.swing.JInternalFrame {
     int op;
     
     ArrayList<Facultad> lista = new ArrayList();
