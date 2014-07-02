@@ -306,7 +306,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         String nomeq = txtNombreE.getText();
         String mar = txtMarca.getText();
         String mod = txtModelo.getText();
-        int ser = Integer.parseInt(txtSerie.getText());
+        String ser = txtSerie.getText();
         int est = Integer.parseInt(txtEstado.getText());
         
         int o = ad1.registrarEquipo(iddet, nomeq, mar, mod, ser, est);
@@ -334,7 +334,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                     String nomeq = txtNombreE.getText();
                     String mar = txtMarca.getText();
                     String mod = txtModelo.getText();
-                    int ser = Integer.parseInt(txtSerie.getText());
+                    String ser = txtSerie.getText();
                     int est = Integer.parseInt(txtEstado.getText());
              
                     int x = ad1.modificarEquipo(id, nomeq, mar, mod, ser, est);
@@ -399,7 +399,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                 txtNombreE.setText(lista1.get(i).getNombEq());
                 txtMarca.setText(lista1.get(i).getMarca());
                 txtModelo.setText(lista1.get(i).getModelo());
-                txtSerie.setText(""+lista1.get(i).getSerie());
+                txtSerie.setText(lista1.get(i).getSerie());
                 txtEstado.setText(""+lista1.get(i).getEstado());
                 txtIdDetalleInventario.setText(""+lista1.get(i).getIdInventario());
                 

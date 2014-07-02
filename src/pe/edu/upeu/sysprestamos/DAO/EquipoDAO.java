@@ -61,8 +61,8 @@ public class EquipoDAO {
         } 
     return op;    
     }
-    public int registrarEquipo(int idInv, String nombeq, String mar, String mod, int num, int estado){
-        sql="INSERT INTO Equipo VALUES(null,'"+nombeq+"','"+mar+"','"+mod+"','"+num+"','"+estado+"','"+idInv+"')";
+    public int registrarEquipo(int idInv, String nombeq, String mar, String mod, String ser, int estado){
+        sql="INSERT INTO Equipo VALUES(null,'"+nombeq+"','"+mar+"','"+mod+"','"+ser+"','"+estado+"','"+idInv+"')";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -87,8 +87,8 @@ public class EquipoDAO {
         }
         return lista;
     }
-    public int modificarEquipo(int ide, String nombeq, String mar, String mod, int num, int estado){
-        sql="UPDATE Equipo set Nombre='"+nombeq+"', Marca='"+mar+"', Modelo='"+mod+"', NroSerie='"+num+"', Estado='"+estado+"' WHERE idEquipo='"+ide+"'";
+    public int modificarEquipo(int ide, String nombeq, String mar, String mod, String ser, int estado){
+        sql="UPDATE Equipo set Nombre='"+nombeq+"', Marca='"+mar+"', Modelo='"+mod+"', Nro_Serie='"+ser+"', Estado='"+estado+"' WHERE idEquipo='"+ide+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();

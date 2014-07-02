@@ -19,13 +19,13 @@ public class Equipo {
     private String nombEq;
     private String marca;
     private String modelo;
-    private int serie;
+    private String serie;
     private int estado;
 
     public Equipo() {
     }
 
-    public Equipo(int idInventario, String nombEq, String marca, String modelo, int serie, int estado) {
+    public Equipo(int idInventario, String nombEq, String marca, String modelo, String serie, int estado) {
         this.idInventario = idInventario;
         this.nombEq = nombEq;
         this.marca = marca;
@@ -74,11 +74,11 @@ public class Equipo {
         this.modelo = modelo;
     }
 
-    public int getSerie() {
+    public String getSerie() {
         return serie;
     }
 
-    public void setSerie(int serie) {
+    public void setSerie(String serie) {
         this.serie = serie;
     }
 
@@ -89,13 +89,15 @@ public class Equipo {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    
     public static Equipo loadEquipo(ResultSet rs) throws SQLException{
 	Equipo equipo  = new Equipo();
         equipo.setIdEquipo(rs.getInt("idEquipo"));
         equipo.setNombEq(rs.getString("Nombre"));
         equipo.setMarca(rs.getString("Marca"));
         equipo.setModelo(rs.getString("Modelo"));
-        equipo.setSerie(rs.getInt("NroSerie"));
+        equipo.setSerie(rs.getString("NroSerie"));
         equipo.setEstado(rs.getInt("Estado"));
         equipo.setIdInventario(rs.getInt("idDetalleInventario"));
         
