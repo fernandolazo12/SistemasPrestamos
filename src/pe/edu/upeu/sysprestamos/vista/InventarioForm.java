@@ -7,10 +7,13 @@
 package pe.edu.upeu.sysprestamos.vista;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import pe.edu.upeu.sysprestamos.DAO.EquipoDAO;
 import pe.edu.upeu.sysprestamos.modelo.Inventario;
 import pe.edu.upeu.sysprestamos.DAO.InventarioDAO;
+import pe.edu.upeu.sysprestamos.modelo.Equipo;
 
 /**
  *
@@ -18,9 +21,12 @@ import pe.edu.upeu.sysprestamos.DAO.InventarioDAO;
  */
 public class InventarioForm extends javax.swing.JInternalFrame {
     int op;
+    EquipoDAO ad = new EquipoDAO();
     InventarioDAO ad1 = new InventarioDAO();
     ArrayList<Inventario> lista = new ArrayList();
+    ArrayList<Equipo> lista1 = new ArrayList();
     DefaultTableModel model;
+    DefaultComboBoxModel<Object> modelocombo = new DefaultComboBoxModel<>();
     /**
      * Creates new form InventarioForm
      */
@@ -46,6 +52,9 @@ public class InventarioForm extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         txtEquipo = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cboEquipo = new javax.swing.JComboBox();
+        txtIdEquipo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbListarInventario = new javax.swing.JTable();
@@ -60,9 +69,15 @@ public class InventarioForm extends javax.swing.JInternalFrame {
 
         jLabel1.setText("IdInventario");
 
-        jLabel2.setText("Equipo");
-
         jLabel3.setText("Cantidad");
+
+        jLabel4.setText("Nombre Equipo");
+
+        cboEquipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboEquipoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,18 +89,31 @@ public class InventarioForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel1)
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addGap(64, 64, 64)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(cboEquipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtIdEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(86, 86, 86))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cboEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -97,7 +125,7 @@ public class InventarioForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listar Datos del Inventario"));
@@ -107,7 +135,7 @@ public class InventarioForm extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Equipo", "Cantidad"
+                "Id", "Equipo", "Cantidad", "Nombre Equipo"
             }
         ));
         jtbListarInventario.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,7 +207,7 @@ public class InventarioForm extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -210,8 +238,8 @@ public class InventarioForm extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -223,16 +251,20 @@ public class InventarioForm extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
+        if(cboEquipo.getSelectedIndex()!=0){
+        int ide = Integer.parseInt(txtIdEquipo.getText());
         String equi = txtEquipo.getText();
-        int cant = Integer.parseInt(txtCantidad.getText());
-        op = ad1.registrarIventario(equi, cant);
+        int cat = Integer.parseInt(txtCantidad.getText());
+        int o = ad1.registrarIventario(ide, equi, cat);
         limpiar();
-        if(op!=0){
-            JOptionPane.showMessageDialog(null,"Inventario registrado!");
+        if(o>0){
+            JOptionPane.showMessageDialog(null, "Usuario Registrado");
             updateComponets();            
             btnAgregar.setEnabled(false);
+        }
         }else{
-            JOptionPane.showMessageDialog(null,"Inventario no registrado!");
+        
+            JOptionPane.showMessageDialog(null, "Selecionar Usuario");
         }
         
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -300,6 +332,20 @@ public class InventarioForm extends javax.swing.JInternalFrame {
             }
         }  
     }//GEN-LAST:event_jtbListarInventarioMouseClicked
+
+    private void cboEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboEquipoActionPerformed
+        // TODO add your handling code here:
+        String c = cboEquipo.getSelectedItem().toString();
+        int id;
+        int x = cboEquipo.getSelectedIndex();
+        if(x>0){
+            
+            id = ad.devolverIdEquipo(c);
+            txtIdEquipo.setText(""+id);
+        }
+        
+        
+    }//GEN-LAST:event_cboEquipoActionPerformed
     void limpiar(){
     txtId.setText(null);
     txtEquipo.setText(null);
@@ -331,6 +377,15 @@ public class InventarioForm extends javax.swing.JInternalFrame {
         }        
         jtbListarInventario.setModel(model);
     } 
+     final void cargarEqui(){
+    lista1 = ad.listarEquipo();
+    modelocombo.addElement("Seleccionar Equipo");
+    cboEquipo.setModel(modelocombo);
+    for (int i=0;i<lista1.size();i++){
+    modelocombo.addElement(lista1.get(i).getNombEq());
+    }
+    cboEquipo.setModel(modelocombo);
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -339,9 +394,11 @@ public class InventarioForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNueva;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox cboEquipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -350,5 +407,6 @@ public class InventarioForm extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtEquipo;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdEquipo;
     // End of variables declaration//GEN-END:variables
 }

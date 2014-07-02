@@ -11,9 +11,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pe.edu.upeu.sysprestamos.DAO.EquipoDAO;
-import pe.edu.upeu.sysprestamos.DAO.InventarioDAO;
 import pe.edu.upeu.sysprestamos.modelo.Equipo;
-import pe.edu.upeu.sysprestamos.modelo.Inventario;
+
 
 
 /**
@@ -21,9 +20,8 @@ import pe.edu.upeu.sysprestamos.modelo.Inventario;
  * @author Fernando
  */
 public final class EquipoForm extends javax.swing.JInternalFrame {
-    ArrayList<Inventario> lista = new ArrayList();
+    int op;
     ArrayList<Equipo> lista1 = new ArrayList();
-    InventarioDAO ad = new InventarioDAO();
     EquipoDAO ad1 = new EquipoDAO();
     DefaultTableModel model;
     DefaultComboBoxModel<Object> modelocombo = new DefaultComboBoxModel<>();
@@ -33,7 +31,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
      */
     public EquipoForm() {
         initComponents();
-        cargarInven();
         desabilitar();              
         ListarEqui();
         bloquear();
@@ -50,14 +47,11 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
 
         jTextField2 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        cboInventario = new javax.swing.JComboBox();
-        txtIdDetalleInventario = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         txtNombreE = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
@@ -79,8 +73,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos de los Equipos"));
 
-        jLabel1.setText("IdDetalleInventario");
-
         jLabel2.setText("IdEquipo");
 
         jLabel3.setText("Nombre Equipo");
@@ -91,13 +83,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Nro Serie");
 
-        cboInventario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecionar" }));
-        cboInventario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboInventarioActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("Estado");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -107,19 +92,14 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addGap(35, 35, 35)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtIdDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -127,21 +107,16 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                         .addComponent(txtMarca, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtNombreE, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(txtModelo, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtNombreE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,21 +124,19 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21)
+                    .addComponent(jLabel6)
+                    .addComponent(txtSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Listar los Datos Equipo"));
@@ -173,7 +146,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Id", "Nombre", "Marca", "Modelo", "Numero Serie", "Estado", "IdDetalleInventario"
+                "Id", "Nombre", "Marca", "Modelo", "Numero Serie", "Estado"
             }
         ));
         jtbListarEquipo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -190,7 +163,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,11 +244,15 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -283,11 +260,11 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -301,25 +278,20 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
-        if(cboInventario.getSelectedIndex()!=0){
-        int iddet = Integer.parseInt(txtIdDetalleInventario.getText());
-        String nomeq = txtNombreE.getText();
-        String mar = txtMarca.getText();
+        String nombe = txtNombreE.getText();
+        String marc = txtMarca.getText();
         String mod = txtModelo.getText();
         String ser = txtSerie.getText();
-        int est = Integer.parseInt(txtEstado.getText());
-        
-        int o = ad1.registrarEquipo(iddet, nomeq, mar, mod, ser, est);
+        int est = Integer.parseInt(txtEstado.getText());   
+        op = ad1.registrarEquipo(est, nombe, marc, mod, ser, est);
         limpiar();
-        if(o>0){
-            JOptionPane.showMessageDialog(null, "Equipo Registrado");
+        if(op!=0){
+            JOptionPane.showMessageDialog(null,"Equipo registrado!");
             updateComponets();            
             btnAgregar.setEnabled(false);
-        }
         }else{
-        
-            JOptionPane.showMessageDialog(null, "Selecionar Equipo");
-        }
+            JOptionPane.showMessageDialog(null,"Equipo no registrado!");
+        }    
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -376,18 +348,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void cboInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboInventarioActionPerformed
-        // TODO add your handling code here:
-        String c = cboInventario.getSelectedItem().toString();
-        int id;
-        int x = cboInventario.getSelectedIndex();
-        if(x>0){
-            
-            id = ad.devolverIdInventario(c);
-            txtIdDetalleInventario.setText(""+id);
-        }
-    }//GEN-LAST:event_cboInventarioActionPerformed
-
     private void jtbListarEquipoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbListarEquipoMouseClicked
         // TODO add your handling code here:
         if(evt.getButton()==1){
@@ -401,14 +361,13 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                 txtModelo.setText(lista1.get(i).getModelo());
                 txtSerie.setText(lista1.get(i).getSerie());
                 txtEstado.setText(""+lista1.get(i).getEstado());
-                txtIdDetalleInventario.setText(""+lista1.get(i).getIdInventario());
+                
                 
                 
             }
         }  
     }//GEN-LAST:event_jtbListarEquipoMouseClicked
     void limpiar(){
-    txtIdDetalleInventario.setText(null);
     txtId.setText(null);
     txtNombreE.setText(null);
     txtMarca.setText(null);
@@ -429,7 +388,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
      void ListarEqui(){
     lista1 = ad1.listarEquipo();
     model = (DefaultTableModel) jtbListarEquipo.getModel();
-        Object[] equ = new Object[7];
+        Object[] equ = new Object[6];
         for(int i=0;i<lista1.size();i++){
             equ[0]=lista1.get(i).getIdEquipo();
             equ[1]=lista1.get(i).getNombEq();
@@ -437,20 +396,12 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
             equ[3]=lista1.get(i).getModelo();
             equ[4]=lista1.get(i).getSerie();
             equ[5]=lista1.get(i).getEstado();
-            equ[6]=lista1.get(i).getIdInventario();
+         
             model.addRow(equ);
         }        
         jtbListarEquipo.setModel(model);
     }
-    final void cargarInven(){
-    lista = ad.listarInventario();
-    modelocombo.addElement("Seleccionar Inventario");
-    cboInventario.setModel(modelocombo);
-    for (int i=0;i<lista.size();i++){
-    modelocombo.addElement(lista.get(i).getEquipo());
-    }
-    cboInventario.setModel(modelocombo);
-    }
+
     void desabilitar(){
         txtNombreE.setEditable(true);
         btnAgregar.setEnabled(false);
@@ -466,8 +417,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox cboInventario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -482,7 +431,6 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtbListarEquipo;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtIdDetalleInventario;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNombreE;

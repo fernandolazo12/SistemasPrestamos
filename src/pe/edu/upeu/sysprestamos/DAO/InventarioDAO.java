@@ -27,23 +27,10 @@ public class InventarioDAO {
     Statement st;
     ResultSet rs;
     String sql;
-    public int devolverIdInventario(String equi){
-    sql = "SELECT * from DetalleInventario WHERE Equipo = '"+equi+"'";
-    try{
-        st = cx.createStatement();
-        rs = st.executeQuery(sql);
-        while(rs.next()){
-            id = rs.getInt("idDetalleInventario");
-        }
-       // cx.close();
-    }catch(SQLException ex){
-                JOptionPane.showMessageDialog(null,"error" +ex);
-            }
-            return id;
-    }
+   
      public int validarInventario(String equi, int cant){
     
-        sql="SELECT * FROM DetalleInventario WHERE Equipo='"+equi+"' AND Cantidad'"+cant+"'";
+        sql="SELECT * FROM Detalle_Inventario WHERE Equipo='"+equi+"' AND Cantidad'"+cant+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -60,7 +47,7 @@ public class InventarioDAO {
     return op;    
     } 
     public int varificarInventario(String equi){
-        sql="SELECT * FROM DetalleInventario WHERE Equipo='"+equi+"'";
+        sql="SELECT * FROM Detalle_Inventario WHERE Equipo='"+equi+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -75,8 +62,8 @@ public class InventarioDAO {
         } 
     return op;    
     }
-    public int registrarIventario(String equi, int cant){
-        sql="INSERT INTO DetalleInventario VALUES(null,'"+equi+"','"+cant+"')";
+    public int registrarIventario(int ide, String equi, int cant){
+        sql="INSERT INTO Detalle_Inventario VALUES(null,'"+equi+"','"+cant+"','"+ide+"')";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -88,7 +75,7 @@ public class InventarioDAO {
     }
     public ArrayList<Inventario> listarInventario(){
         ArrayList<Inventario> lista = new ArrayList();
-        sql = "select *from DetalleInventario";
+        sql = "select *from Detalle_Inventario";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -101,8 +88,8 @@ public class InventarioDAO {
         }
         return lista;
     }
-    public int modificarInventario(int iddet, String equi, int cant){
-        sql="UPDATE DetalleInventario set Equipo='"+equi+"', Cantidad='"+cant+"' WHERE idDetalleInventario='"+iddet+"'";
+    public int modificarInventario(int iddet,String equi, int cant){
+        sql="UPDATE Detalle_Inventario set Equipo='"+equi+"', Cantidad='"+cant+"' WHERE idDetalleInventario='"+iddet+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -113,7 +100,7 @@ public class InventarioDAO {
     return res;
     }
     public int eliminarInventario(int iddet){
-        sql="DELETE FROM DetalleInventario WHERE idDetalleInventario='"+iddet+"'";
+        sql="DELETE FROM Detalle_Inventario WHERE idDetalleInventario='"+iddet+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -125,7 +112,7 @@ public class InventarioDAO {
     }
     public ArrayList<Inventario> listarInventario(int iddet){
         ArrayList<Inventario> lista = new ArrayList();
-        sql = "select *from DetalleInventario WHERE idDetalleInventario="+iddet;
+        sql = "select *from Detalle_Inventario WHERE idDetalleInventario="+iddet;
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();
@@ -140,7 +127,7 @@ public class InventarioDAO {
     }
     public ArrayList<Inventario> listarInventario(String equi){
         ArrayList<Inventario> lista = new ArrayList();
-        sql = "select *from DetalleInventario WHERE Equipo LIKE '"+equi+"'%";
+        sql = "select *from Detalle_Inventario WHERE Equipo LIKE '"+equi+"'%";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();

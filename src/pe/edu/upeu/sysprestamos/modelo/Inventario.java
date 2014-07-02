@@ -15,13 +15,15 @@ import java.sql.SQLException;
  */
 public class Inventario {
     private int idInventario;
+    private int idEquipo;
     private String equipo;
     private int cantidad;    
 
     public Inventario() {
     }
 
-    public Inventario(String equipo, int cantidad) {
+    public Inventario(int idEquipo, String equipo, int cantidad) {
+        this.idEquipo = idEquipo;
         this.equipo = equipo;
         this.cantidad = cantidad;
     }
@@ -32,6 +34,14 @@ public class Inventario {
 
     public void setIdInventario(int idInventario) {
         this.idInventario = idInventario;
+    }
+
+    public int getIdEquipo() {
+        return idEquipo;
+    }
+
+    public void setIdEquipo(int idEquipo) {
+        this.idEquipo = idEquipo;
     }
 
     public String getEquipo() {
@@ -49,11 +59,14 @@ public class Inventario {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    
     public static Inventario loadInventario(ResultSet rs) throws SQLException{
 		Inventario inventario  = new Inventario();
                 inventario.setIdInventario(rs.getInt("idDetalleInventario"));
                 inventario.setEquipo(rs.getString("Equipo"));
 		inventario.setCantidad(rs.getInt("Cantidad"));
+                inventario.setIdEquipo(rs.getInt("idEquipo"));
                 
 		return inventario;
 	}

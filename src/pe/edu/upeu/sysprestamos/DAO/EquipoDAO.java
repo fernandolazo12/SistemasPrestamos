@@ -27,7 +27,20 @@ public class EquipoDAO {
     Statement st;
     ResultSet rs;
     String sql;
-    
+     public int devolverIdEquipo(String nombe){
+    sql = "SELECT * from Detalle_Inventario WHERE Nombre = '"+nombe+"'";
+    try{
+        st = cx.createStatement();
+        rs = st.executeQuery(sql);
+        while(rs.next()){
+            id = rs.getInt("idEquipo");
+        }
+       // cx.close();
+    }catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"error" +ex);
+            }
+            return id;
+    }
     public int validarEquipo(String nombeq, String mar, String mod, String ser, int estado){
         sql="SELECT *FROM Equipo WHERE Nombre='"+nombeq+"' AND Marca='"+mar+"' AND Modelo='"+mod+"' AND Nro_Serie='"+ser+"' AND Estado='"+estado+"'";
         try {
@@ -61,8 +74,8 @@ public class EquipoDAO {
         } 
     return op;    
     }
-    public int registrarEquipo(int idInv, String nombeq, String mar, String mod, String ser, int estado){
-        sql="INSERT INTO Equipo VALUES(null,'"+nombeq+"','"+mar+"','"+mod+"','"+ser+"','"+estado+"','"+idInv+"')";
+    public int registrarEquipo(int idInv,String nombeq, String mar, String mod, String ser, int estado){
+        sql="INSERT INTO Equipo VALUES(null,'"+nombeq+"','"+mar+"','"+mod+"','"+ser+"','"+estado+"')";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();

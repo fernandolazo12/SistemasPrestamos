@@ -15,7 +15,6 @@ import java.sql.SQLException;
  */
 public class Equipo {
     private int idEquipo;
-    private int idInventario;
     private String nombEq;
     private String marca;
     private String modelo;
@@ -25,8 +24,7 @@ public class Equipo {
     public Equipo() {
     }
 
-    public Equipo(int idInventario, String nombEq, String marca, String modelo, String serie, int estado) {
-        this.idInventario = idInventario;
+    public Equipo(String nombEq, String marca, String modelo, String serie, int estado) {
         this.nombEq = nombEq;
         this.marca = marca;
         this.modelo = modelo;
@@ -40,14 +38,6 @@ public class Equipo {
 
     public void setIdEquipo(int idEquipo) {
         this.idEquipo = idEquipo;
-    }
-
-    public int getIdInventario() {
-        return idInventario;
-    }
-
-    public void setIdInventario(int idInventario) {
-        this.idInventario = idInventario;
     }
 
     public String getNombEq() {
@@ -90,6 +80,7 @@ public class Equipo {
         this.estado = estado;
     }
 
+
     
     public static Equipo loadEquipo(ResultSet rs) throws SQLException{
 	Equipo equipo  = new Equipo();
@@ -99,7 +90,7 @@ public class Equipo {
         equipo.setModelo(rs.getString("Modelo"));
         equipo.setSerie(rs.getString("Nro_Serie"));
         equipo.setEstado(rs.getInt("Estado"));
-        equipo.setIdInventario(rs.getInt("idDetalleInventario"));
+        
         
 		
         return equipo;
