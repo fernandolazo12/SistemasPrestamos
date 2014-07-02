@@ -19,7 +19,7 @@ import pe.edu.upeu.sysprestamos.modelo.Equipo;
  *
  * @author Fernando
  */
-public class InventarioForm extends javax.swing.JInternalFrame {
+public final class InventarioForm extends javax.swing.JInternalFrame {
     int op;
     EquipoDAO ad = new EquipoDAO();
     InventarioDAO ad1 = new InventarioDAO();
@@ -33,6 +33,7 @@ public class InventarioForm extends javax.swing.JInternalFrame {
     public InventarioForm() {
         initComponents();
         ListarInven();
+        cargarEqui();
         setLocation(300, 100);
     }
 
