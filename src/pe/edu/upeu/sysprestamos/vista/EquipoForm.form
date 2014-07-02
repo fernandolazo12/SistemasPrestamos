@@ -84,7 +84,7 @@
                       <Group type="102" attributes="0">
                           <Component id="cboInventario" min="-2" pref="131" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtIdInventario" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="txtIdDetalleInventario" min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                       <Component id="txtId" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="txtEstado" min="-2" pref="37" max="-2" attributes="0"/>
@@ -106,7 +106,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cboInventario" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtIdInventario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIdDetalleInventario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -190,7 +190,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboInventarioActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtIdInventario">
+        <Component class="javax.swing.JTextField" name="txtIdDetalleInventario">
         </Component>
         <Component class="javax.swing.JTextField" name="txtId">
         </Component>

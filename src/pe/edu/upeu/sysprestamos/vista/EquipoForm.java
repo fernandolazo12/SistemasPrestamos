@@ -57,7 +57,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         cboInventario = new javax.swing.JComboBox();
-        txtIdInventario = new javax.swing.JTextField();
+        txtIdDetalleInventario = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
         txtNombreE = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
@@ -119,7 +119,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtIdInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtIdDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -136,7 +136,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(cboInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIdInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdDetalleInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -302,7 +302,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         if(cboInventario.getSelectedIndex()!=0){
-        int iddet = Integer.parseInt(txtIdInventario.getText());
+        int iddet = Integer.parseInt(txtIdDetalleInventario.getText());
         String nomeq = txtNombreE.getText();
         String mar = txtMarca.getText();
         String mod = txtModelo.getText();
@@ -384,7 +384,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
         if(x>0){
             
             id = ad.devolverIdInventario(c);
-            txtIdInventario.setText(""+id);
+            txtIdDetalleInventario.setText(""+id);
         }
     }//GEN-LAST:event_cboInventarioActionPerformed
 
@@ -401,14 +401,14 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
                 txtModelo.setText(lista1.get(i).getModelo());
                 txtSerie.setText(""+lista1.get(i).getSerie());
                 txtEstado.setText(""+lista1.get(i).getEstado());
-                txtIdInventario.setText(""+lista1.get(i).getIdInventario());
+                txtIdDetalleInventario.setText(""+lista1.get(i).getIdInventario());
                 
                 
             }
         }  
     }//GEN-LAST:event_jtbListarEquipoMouseClicked
     void limpiar(){
-    txtIdInventario.setText(null);
+    txtIdDetalleInventario.setText(null);
     txtId.setText(null);
     txtNombreE.setText(null);
     txtMarca.setText(null);
@@ -482,7 +482,7 @@ public final class EquipoForm extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtbListarEquipo;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtId;
-    private javax.swing.JTextField txtIdInventario;
+    private javax.swing.JTextField txtIdDetalleInventario;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNombreE;
