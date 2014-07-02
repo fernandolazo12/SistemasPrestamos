@@ -28,8 +28,8 @@ public class EquipoDAO {
     ResultSet rs;
     String sql;
     
-    public int validarEquipo(String nombeq, String mar, String mod, int num, int estado){
-        sql="SELECT *FROM Equipo WHERE Nombre='"+nombeq+"' AND Marca='"+mar+"' AND Modelo='"+mod+"' AND NroSerie='"+num+"' AND Estado='"+estado+"'";
+    public int validarEquipo(String nombeq, String mar, String mod, String ser, int estado){
+        sql="SELECT *FROM Equipo WHERE Nombre='"+nombeq+"' AND Marca='"+mar+"' AND Modelo='"+mod+"' AND Nro_Serie='"+ser+"' AND Estado='"+estado+"'";
         try {
             cx = Conexion.getConex();
             st = cx.createStatement();

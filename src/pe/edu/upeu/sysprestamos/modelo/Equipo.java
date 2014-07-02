@@ -97,7 +97,7 @@ public class Equipo {
         equipo.setNombEq(rs.getString("Nombre"));
         equipo.setMarca(rs.getString("Marca"));
         equipo.setModelo(rs.getString("Modelo"));
-        equipo.setSerie(rs.getString("NroSerie"));
+        equipo.setSerie(rs.getString("Nro_Serie"));
         equipo.setEstado(rs.getInt("Estado"));
         equipo.setIdInventario(rs.getInt("idDetalleInventario"));
         
