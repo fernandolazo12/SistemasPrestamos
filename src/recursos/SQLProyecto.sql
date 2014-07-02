@@ -32,7 +32,7 @@ CREATE TABLE Equipo (
   Nombre VARCHAR(20) NULL,
   Marca VARCHAR(20) NULL,
   Modelo VARCHAR(20) NULL,
-  Nro_Serie INTEGER UNSIGNED NULL,
+  Nro_Serie VARCHAR(20) NULL,
   Estado CHAR(1) NULL,
   idDetalleInventario INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY(idEquipo)
