@@ -329,7 +329,8 @@ public final class InventarioForm extends javax.swing.JInternalFrame {
             for(int i=0;i<lista.size();i++){
                 txtId.setText(""+lista.get(i).getIdInventario());
                 txtEquipo.setText(lista.get(i).getEquipo());
-                txtCantidad.setText(""+lista.get(i).getCantidad());             
+                txtCantidad.setText(""+lista.get(i).getCantidad()); 
+                txtIdEquipo.setText(""+lista.get(i).getIdEquipo()); 
             }
         }  
     }//GEN-LAST:event_jtbListarInventarioMouseClicked
@@ -369,11 +370,12 @@ public final class InventarioForm extends javax.swing.JInternalFrame {
     void ListarInven(){
     lista = ad1.listarInventario();
     model = (DefaultTableModel) jtbListarInventario.getModel();
-        Object[] inv = new Object[3];
+        Object[] inv = new Object[4];
         for(int i=0;i<lista.size();i++){
             inv[0]=lista.get(i).getIdInventario();
             inv[1]=lista.get(i).getEquipo(); 
             inv[2]=lista.get(i).getCantidad();
+            inv[3]=lista.get(i).getIdEquipo();
             model.addRow(inv);
         }        
         jtbListarInventario.setModel(model);

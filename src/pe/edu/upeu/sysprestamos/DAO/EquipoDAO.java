@@ -28,7 +28,7 @@ public class EquipoDAO {
     ResultSet rs;
     String sql;
      public int devolverIdEquipo(String nombe){
-    sql = "SELECT * from Detalle_Inventario WHERE Nombre = '"+nombe+"'";
+    sql = "SELECT * from Equipo WHERE Nombre = '"+nombe+"'";
     try{
         st = cx.createStatement();
         rs = st.executeQuery(sql);
