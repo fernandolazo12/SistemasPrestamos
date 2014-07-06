@@ -174,8 +174,8 @@ public class LoginForm extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         try {
             JFrame.setDefaultLookAndFeelDecorated(true);
-            //SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/toxicthemepack.zip"));
-            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/mmMagra-Xthemepack.zip"));
+            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/toxicthemepack.zip"));
+            //SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/mmMagra-Xthemepack.zip"));
             UIManager.setLookAndFeel("com.l2fprod.gui.plaf.skin.SkinLookAndFeel");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
